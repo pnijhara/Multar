@@ -51,3 +51,24 @@ class VacateSeat(APIView):
         seat.save()
         
         return Response({'message': 'vacated'})
+
+
+class GetSeatBooking(APIView):
+
+    @staticmethod
+    def get(request, query_by):
+        booking = None
+        if query_by.isdigit():
+            booking = SeatBooking.objects.filter(seat_id=query_by).first()
+        
+        if not booking:
+            booking = SeatBooking.objects.filter(person_name=query_by).first()
+
+        if not booking:
+            booking = SeatBooking.objects.filter(ticket_id=query_by).first()
+        
+        if booking:
+            serliazed = SeatBookingSerializer(booking)
+            return Response(serliazed.data)
+        else:
+            return Response({'message': 'booking not found'}, 404)

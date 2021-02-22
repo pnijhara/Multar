@@ -20,5 +20,6 @@ from seat_booking import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('occupy/', views.OccupySeat.as_view()),
-    path('vacate/', views.VacateSeat.as_view())
+    path('vacate/', views.VacateSeat.as_view()),
+    path('get_info/<str:query_by>/', views.GetSeatBooking.as_view()),
 ]
