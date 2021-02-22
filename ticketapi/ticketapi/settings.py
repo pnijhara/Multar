@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+MAX_OCCUPANCY = 100
 
 # Application definition
 
