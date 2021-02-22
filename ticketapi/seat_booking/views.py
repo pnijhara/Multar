@@ -31,6 +31,23 @@ class OccupySeat(APIView):
             )
             seat.is_available = False
             seat.save()
-            return Response({'seatId': seat.id})
+            return Response({'seat_id': seat.id})
         else:
             return Response({'message': 'No seat available'}, 404)
+
+
+class VacateSeat(APIView):
+
+    @staticmethod
+    def post(request):
+        request_body = json.loads(request.body.decode('utf-8'))
+        seat_id = request_body['seat_id']
+        
+        seat = Seat.objects.filter(pk=seat_id).first()
+        booking = SeatBooking.objects.filter(seat_id=seat).first()
+        
+        booking.delete()
+        seat.is_available = True
+        seat.save()
+        
+        return Response({'message': 'vacated'})
