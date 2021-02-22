@@ -7,7 +7,7 @@ class Seat(models.Model):
         return f"{self.id} {self.is_available}"
 
 class SeatBooking(models.Model):
-    seat_id = models.ForeignKey(Seat, on_delete=models.CASCADE)
+    seat_id = models.OneToOneField(Seat, on_delete=models.CASCADE)
     ticket_id = models.CharField(max_length=64)
     person_name = models.CharField(max_length=200)
 
